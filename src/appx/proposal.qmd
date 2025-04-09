@@ -4,6 +4,4 @@ title: "Proposal"
 
 Your proposal will go here.
 
-# 
-
-# 
+# Number of Malaria Cases from 2010

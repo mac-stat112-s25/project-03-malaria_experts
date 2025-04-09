@@ -6,3 +6,8 @@ Your proposal will go here.
 
 
 ### Number of Malaria Cases from 2010
+- Amy Yang, Riley Karatas, Aisling Li, Zora Shi
+- Malaria is a life-threatening disease caused by parasites that are transmitted to people through the bites of infected female Anopheles mosquitoes. Due to the significance of the cause we will be analyzing malaria cases from 2010 to 2017 in terms of global distribution, as well as changes in case numbers and death rates.
+- 1 graph+description/person 
+- 1 graph/class
+

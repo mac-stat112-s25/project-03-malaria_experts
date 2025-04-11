@@ -21,7 +21,4 @@ Your proposal will go here.
 
 **Graphs:**
 
-Total cases vs time -> Total cases vs time vs countries --> Choropleth map accordingly 
-Total death cases vs time Total death cases vs time vs countries Choropleth map accordingly 
-Total cases vs death vs time (the conclusion would be global, not regional) 
-Total cases vs death vs region (regional excluding time variable)
+Total cases vs time -\> Total cases vs time vs countries --\> Choropleth map accordingly Total death cases vs time Total death cases vs time vs countries Choropleth map accordingly Total cases vs death vs time (the conclusion would be global, not regional) Total cases vs death vs region (regional excluding time variable)

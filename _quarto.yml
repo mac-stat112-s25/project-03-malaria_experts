@@ -42,6 +42,8 @@ book:
   appendices:
   - src/appx/proposal.qmd
   - src/appx/case-study.qmd
+  - src/et/firstdoc.qmd
+  -src/eda/et_firstdoc.qmd
 
 
 

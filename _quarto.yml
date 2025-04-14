@@ -37,6 +37,7 @@ book:
 
   chapters:
     - index.qmd
+    - Total_Death_vs_Time/death_vs_time.qmd
 
   appendices:
   - src/appx/proposal.qmd

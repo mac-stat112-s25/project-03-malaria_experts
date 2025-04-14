@@ -1,5 +1,0 @@
----
-title: "death_vs_time"
-format: html
----
-

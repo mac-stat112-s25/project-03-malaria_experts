@@ -39,6 +39,8 @@ book:
     - index.qmd
     - src/et/feride-k.qmd
     - src/eda/feride-k.qmd
+    - src/et/amy-y.qmd
+    - src/eda/amy-y.qmd
 
   appendices:
   - src/appx/proposal.qmd

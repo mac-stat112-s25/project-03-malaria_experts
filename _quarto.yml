@@ -42,6 +42,8 @@ book:
   appendices:
   - src/appx/proposal.qmd
   - src/appx/case-study.qmd
+  - src/et/feride-k.qmd
+  - src/eda/feride-k.qmd
 
 
 

@@ -37,15 +37,20 @@ book:
 
   chapters:
     - index.qmd
-    - src/et/feride-k.qmd
-    - src/eda/feride-k.qmd
-    - src/et/amy-y.qmd
-    - src/eda/amy-y.qmd
+    
+    - part: "Effevtive Teamwork"
+      chapters: 
+      - src/et/feride-k.qmd
+      - src/et/amy-y.qmd
+        
+    - part: "EDA"
+      chapters: 
+      - src/eda/feride-k.qmd
+      - src/eda/amy-y.qmd
 
   appendices:
   - src/appx/proposal.qmd
   - src/appx/case-study.qmd
-  -
  
 
 

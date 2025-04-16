@@ -13,5 +13,8 @@ library(ggplot2)
 library(tidyverse)
 library(dplyr)
 
-testscore <- read.csv("../../data/archive 2/estimated_numbers.csv")
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv")
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv")
+
 ```

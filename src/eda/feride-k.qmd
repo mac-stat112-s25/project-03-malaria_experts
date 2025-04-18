@@ -33,3 +33,63 @@ reported %>%
 
 > The variance is due to these data being globally.
 > Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
+
+```{r}
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  mutate(Year = as.factor(Year)) %>%
+  ggplot(aes(x = Year, y = No..of.deaths)) +
+  geom_point() +
+  facet_wrap(~ WHO.Region) +  # This line facets the plot by country
+  theme_minimal()
+```
+
+```{r}
+# Load necessary libraries
+library(tidyverse)
+library(ggplot2)
+library(data.table)
+
+# Set data directory
+dir1 <- "../input/malaria-dataset/"
+
+# Load datasets
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv", stringsAsFactors = FALSE)
+incidence <- read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv", stringsAsFactors = FALSE)
+reported <- read.csv("../../data/archive 2/reported_numbers.csv", stringsAsFactors = FALSE)
+
+# Merge reported and incidence datasets
+data <- reported %>% 
+  left_join(incidence, by = c("Country", "Year", "WHO.Region")) %>% 
+  rename("No.of.cases" = "No..of.cases.x",
+         "No.of.cases.per.1000.pop.at.risk" = "No..of.cases.y")
+
+# Set plot size for better readability
+options(repr.plot.width = 14, repr.plot.height = 10)
+
+# Boxplot of global deaths by year (non-faceted)
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  mutate(Year = as.factor(Year)) %>%
+  ggplot(aes(x = Year, y = No..of.deaths)) +
+  geom_boxplot(fill = "#56B4E9", alpha = 0.7) +
+  labs(title = "Distribution of Reported Malaria Deaths by Year (Global)",
+       y = "Number of Deaths", x = "Year") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# 🟠 Scatter plot of deaths over time, faceted by WHO Region
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  mutate(Year = as.factor(Year)) %>%
+  ggplot(aes(x = Year, y = No..of.deaths)) +
+  geom_point(color = "#D55E00", alpha = 0.7) +
+  labs(title = "Reported Malaria Deaths Over Time by WHO Region",
+       y = "Number of Deaths", x = "Year") +
+  facet_wrap(~ WHO.Region, scales = "free") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```

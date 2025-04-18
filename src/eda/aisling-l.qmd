@@ -4,7 +4,7 @@ format: html
 ---
 ```{r}
 library(tidyverse)
-malaria <- read_csv("~/Desktop/portfolio-aisling06/data/estimated_numbers.csv")
+malaria <- read_csv("../../data/archive 2/estimated_numbers.csv")
 ```
 
 ```{r}

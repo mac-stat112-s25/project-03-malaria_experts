@@ -5,7 +5,7 @@ format: html
 
 Total death cases vs time
 
-# Scatter Plot for Total Death Cases vs Time
+# Scatter Plot for Total Death Cases vs Time Reported
 
 ```{r}
 
@@ -13,5 +13,23 @@ library(ggplot2)
 library(tidyverse)
 library(dplyr)
 
-testscore <- read.csv("../../data/archive 2/estimated_numbers.csv")
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv") #use this one
+
 ```
+
+```{r}
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  mutate(Year = as.factor(Year)) %>%
+  ggplot(aes(x=Year, y= No..of.deaths))+
+  geom_boxplot()+
+  #geom_smooth()+
+  theme_minimal()
+  #coord_flip()
+  
+```
+
+> The variance is due to these data being globally.
+> Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc

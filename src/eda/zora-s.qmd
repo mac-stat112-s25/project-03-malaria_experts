@@ -2,4 +2,23 @@
 title: "Zora S"
 format: html
 ---
+```{r}
+library(tidyverse)
+malaria <- read_csv("~/Desktop/portfolio-Zora109/data/estimated_numbers.csv")
+```
+
+```{r}
+malaria$Year <- as.factor(malaria$Year)
+malaria %>%
+  group_by(Year) %>%
+  summarize(total_cases = sum(`No. of cases_median`, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year, y = total_cases, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Total Malaria Cases Over Time",
+       x = "Year",
+       y = "Total Cases (Median)") +
+  theme_minimal()
+
+```
 

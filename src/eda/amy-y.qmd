@@ -3,3 +3,38 @@ title: "Amy Y"
 format: html
 ---
 
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(sf)
+library(rnaturalearth)
+
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv") #use this one
+
+world <- rnaturalearth::ne_countries(scale = "medium", returnclass = "sf")
+```
+
+```{r}
+dim(reported)
+
+reported_clean <- reported %>%
+  rename(deaths = No..of.deaths)   
+
+map_data <- world %>%
+  left_join(reported_clean, by = c("name" = "Country"))
+```
+
+```{r}
+ggplot(map_data) +
+  geom_sf(aes(fill = deaths), color = "white", size = 0.1) +
+  scale_fill_viridis_c(option = "plasma", trans = "log10") +
+  facet_wrap(~ Year) +
+  theme_minimal() +
+  labs(
+    title = "Reported Deaths by Country Over Time",
+    fill = "Deaths (log scale)"
+  )
+```
+

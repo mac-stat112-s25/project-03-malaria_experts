@@ -1,5 +1,48 @@
 ---
-title: "aisling-l"
+title: "Aisling L"
 format: html
 ---
+```{r}
+library(tidyverse)
+malaria <- read_csv("../../data/archive 2/estimated_numbers.csv")
+```
+
+```{r}
+malaria_clean <- malaria %>%
+  select(Country, Year, `No. of cases_median`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No. of cases_median`
+  )
+
+```
+
+```{r}
+library(plotly)
+fig <- plot_ly(
+  data = malaria_clean,
+  locations = ~country,
+  locationmode = 'country names',
+  z = ~cases,
+  text = ~paste(country, "<br>Cases:", cases),
+  type = 'choropleth',
+  frame = ~year,
+  colorscale = 'Reds',
+  marker = list(line = list(color = "gray", width = 0.5))
+)
+
+fig <- fig %>%
+  layout(
+    title = "Estimated Malaria Cases Over Time (Median)",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = FALSE
+    ),
+    coloraxis = list(colorbar = list(title = "Cases"))
+  )
+
+fig
+
+```
 

@@ -37,4 +37,46 @@ ggplot(map_data) +
     fill = "Deaths (log scale)"
   )
 ```
+```{r}
+library(plotly)
+library(dplyr)
+library(countrycode)
+```
+
+```{r}
+# Example: cleaning reported data
+# Replace 'country', 'year', and 'deaths' with your real column names
+reported_clean_2 <- reported %>%
+  mutate(
+    country = countrycode(Country, origin = "country.name", destination = "iso3c"),
+  #  year = as.integer(Year),
+ #   deaths = as.numeric(No..of.deaths)
+  ) %>%
+  filter(!is.na(country), 
+        # !is.na(year), 
+       #  !is.na(deaths)
+         )
+```
+
+```{r}
+fig <- plot_ly(
+  data = reported_clean_2,
+  type = "choropleth",
+  locations = ~country,
+  z = ~No..of.deaths,
+  frame = ~Year,
+  colorscale = "Reds",
+  text = ~paste(Country, "<br>Deaths:", No..of.deaths),
+  colorbar = list(title = "Deaths"),
+  reversescale = FALSE
+)
+
+fig <- fig %>%
+  layout(
+    title = "Reported Deaths by Country Over Time",
+    geo = list(landcolor = "white")
+  )
+
+fig
+```
 

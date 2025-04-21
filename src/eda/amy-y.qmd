@@ -37,6 +37,9 @@ ggplot(map_data) +
     fill = "Deaths (log scale)"
   )
 ```
+
+##RQ: reported deaths vs time vs country
+
 ```{r}
 library(plotly)
 library(dplyr)
@@ -89,3 +92,33 @@ fig
 ::: {.callout-note title="Caption"}
 This interactice choropleth map shows the number of reported deaths of malaria by countries from 2000 to 2017. Countries shaded in deeper red tones indicate higher death counts, while countries in paler or base colors report fewer or no deaths in a given year. All the coutries appearing with the base color are included in the dataset. 
 :::
+
+##RQ: total case vs deaths vs time vs country
+
+```{r}
+fig <- plot_ly(
+  data = reported_clean_2,
+  type = "choropleth",
+  locations = ~country,
+  z = ~No..of.deaths,
+  frame = ~Year,
+  colorscale = "Reds",
+  text = ~paste(Country, "<br>Deaths:", No..of.deaths),
+  colorbar = list(title = "Deaths"),
+  reversescale = FALSE
+)
+
+fig <- fig %>%
+  layout(
+    title = "Reported Deaths by Country Over Time",
+    geo = list(showframe = FALSE,
+               showcoastlines = FALSE,
+               showcountries = TRUE,
+               countrycolor = "gray",
+               projection = list(type = "equirectangular"),
+               bgcolor = "white",
+               landcolor = "white")
+  )
+
+fig
+```

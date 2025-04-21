@@ -3,22 +3,29 @@ title: "Zora S"
 format: html
 ---
 ```{r}
+library(ggplot2)
 library(tidyverse)
-malaria <- read_csv("../../data/archive 2/estimated_numbers.csv")
+library(sf)
+library(rnaturalearth)
+
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv")
 ```
 
 ```{r}
-malaria$Year <- as.factor(malaria$Year)
-malaria %>%
+reported$Year <- as.factor(reported$Year)
+reported %>%
   group_by(Year) %>%
-  summarize(total_cases = sum(`No. of cases_median`, na.rm = TRUE)) %>%
+  summarize(total_cases = sum(No..of.cases, na.rm = TRUE)) %>%
   ggplot(aes(x = Year, y = total_cases, group = 1)) +
   geom_line() +
   geom_point() +
-  labs(title = "Total Malaria Cases Over Time",
+  labs(title = "Total Reported Malaria Cases Over Time",
        x = "Year",
-       y = "Total Cases (Median)") +
+       y = "Total Cases") +
   theme_minimal()
+
 
 ```
 

@@ -3,17 +3,24 @@ title: "Aisling L"
 format: html
 ---
 ```{r}
+
+library(ggplot2)
 library(tidyverse)
-malaria <- read_csv("../../data/archive 2/estimated_numbers.csv")
+library(dplyr)
+
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv") #use this one
+
 ```
 
 ```{r}
-malaria_clean <- malaria %>%
-  select(Country, Year, `No. of cases_median`) %>%
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`) %>%
   rename(
     country = Country,
     year = Year,
-    cases = `No. of cases_median`
+    cases = `No..of.cases`
   )
 
 ```
@@ -34,7 +41,7 @@ fig <- plot_ly(
 
 fig <- fig %>%
   layout(
-    title = "Estimated Malaria Cases Over Time (Median)",
+    title = "Reported Malaria Cases Over Time",
     geo = list(
       showframe = FALSE,
       showcoastlines = FALSE

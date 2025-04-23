@@ -93,3 +93,17 @@ reported %>%
 
 
 ```
+
+```{r}
+# Fit separate models by WHO region
+lm_models_by_region <- reported_clean %>%
+  group_by(WHO.Region) %>%
+  do(model = lm(No..of.deaths ~ Year, data = .))
+
+# View model summaries for each region
+lm_models_by_region$model %>% lapply(summary)
+
+
+```
+
+general trends- what is going on in this region

@@ -96,29 +96,125 @@ This interactice choropleth map shows the number of reported deaths of malaria b
 ##RQ: total case vs deaths vs time vs country
 
 ```{r}
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`
+  )
+
+```
+
+```{r}
+library(plotly)
 fig <- plot_ly(
-  data = reported_clean_2,
-  type = "choropleth",
+  data = malaria_clean,
   locations = ~country,
-  z = ~No..of.deaths,
-  frame = ~Year,
-  colorscale = "Reds",
-  text = ~paste(Country, "<br>Deaths:", No..of.deaths),
-  colorbar = list(title = "Deaths"),
-  reversescale = FALSE
+  locationmode = 'country names',
+  z = ~cases,
+  text = ~paste(country, "<br>Cases:", cases),
+  type = 'choropleth',
+  frame = ~year,
+  colorscale = 'Reds',
+  marker = list(line = list(color = "gray", width = 0.5))
 )
 
 fig <- fig %>%
   layout(
-    title = "Reported Deaths by Country Over Time",
-    geo = list(showframe = FALSE,
-               showcoastlines = FALSE,
-               showcountries = TRUE,
+    title = "Estimated Malaria Cases Over Time (Median)",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = FALSE
+    ),
+    coloraxis = list(colorbar = list(title = "Cases"))
+  )
+
+fig <- fig %>%
+  layout(
+    title = "Estimated Malaria Cases and Deaths Over Time (Median)",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = FALSE,
+      showcountries = TRUE,
                countrycolor = "gray",
                projection = list(type = "equirectangular"),
                bgcolor = "white",
-               landcolor = "white")
+               landcolor = "white"
+    ),
+    coloraxis = list(
+      colorbar = list(title = "Cases")
+    )
   )
 
+
+fig
+
+```
+
+```{r}
+
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`,`No..of.deaths`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`,
+    deaths = `No..of.deaths`
+  )
+
+fig <- plot_ly() %>%
+  # Choropleth layer for total cases
+  add_trace(
+    data = malaria_clean,
+    type = "choropleth",
+    locations = ~country,
+    locationmode = "country names",
+    z = ~cases,
+    frame = ~year,
+    colorscale = "Reds",
+    marker = list(line = list(color = "gray", width = 0.5)),
+    text = ~paste(
+      country,
+      "<br>Cases: ", format(cases, big.mark = ","),
+      "<br>Deaths: ", format(deaths, big.mark = ",")
+    ),
+    hoverinfo = "text"
+  ) %>%
+  
+  # Scattergeo layer for deaths as circle markers
+  add_trace(
+    data = malaria_clean,
+    type = "scattergeo",
+    locations = ~country,
+    locationmode = "country names",
+    frame = ~year,
+    marker = list(
+      size = ~sqrt(deaths) / 100,  # Scale marker size
+      color = "black",
+      opacity = 0.5,
+      line = list(width = 0)
+    ),
+    hoverinfo = "none",  # Already shown in choropleth hover
+    showlegend = FALSE
+  ) %>%
+  
+  layout(
+    title = "Malaria Cases and Deaths Over Time",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = FALSE,
+      showcountries = TRUE,
+               countrycolor = "gray",
+               projection = list(type = "equirectangular"),
+               bgcolor = "white",
+               landcolor = "white"
+    ),
+    coloraxis = list(
+      colorbar = list(title = "Cases")
+    )
+   
+  )
 fig
 ```
+

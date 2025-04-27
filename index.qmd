@@ -1,61 +1,97 @@
 ---
-title: "Report"
+title: "Malaria Cases: 2000-2017"
 execute: 
   echo: true      # change to true to show the code
 code-fold: false  # change to true to fold the code chunks
 ---
 
-```{r}
-# Load necessary libraries
-library(tidyverse)
-library(ggplot2)
-library(data.table)
+# Introduction
 
+Malaria is a life-threatening disease caused by infected female *Anopheles* mosquitoes. This analysis explores malaria cases from 2000 to 2017 globally and by regions (Americas, Africa, Eastern Mediterranean, Europe, South-East Asia, Western Pacific), focusing on trends in case numbers and death rates.
 
-#group by sum, line per region
+# Research Question, Aims, and Methodology
 
-# Set data directory
-dir1 <- "../input/malaria-dataset/"
+## Research Question
 
-# Load datasets
-estimated_numbers <- read.csv("data/archive 2/estimated_numbers.csv", stringsAsFactors = FALSE)
-incidence <- read.csv("data/archive 2/incidence_per_1000_pop_at_risk.csv", stringsAsFactors = FALSE)
-reported <- read.csv("data/archive 2/reported_numbers.csv", stringsAsFactors = FALSE)
+**How has global malaria cases and reported death cases changed over time and across different regions from 2000 to 2017?**
 
-# Merge reported and incidence datasets
-data <- reported %>% 
-  left_join(incidence, by = c("Country", "Year", "WHO.Region")) %>% 
-  rename("No.of.cases" = "No..of.cases.x",
-         "No.of.cases.per.1000.pop.at.risk" = "No..of.cases.y")
+## Aims
 
-# Set plot size for better readability
-options(repr.plot.width = 14, repr.plot.height = 10)
+-   To visualize trends in malaria cases and deaths globally from 2000 onwards.
+-   To analyze regional differences and identify patterns or anomalies over time.
+-   To better understand where malaria remains a major public health challenge.
 
-# Boxplot of global deaths by year (non-faceted)
-reported %>% 
-  drop_na(No..of.deaths) %>% 
-  mutate(Year = as.factor(Year)) %>%
-  ggplot(aes(x = Year, y = No..of.deaths)) +
-  geom_boxplot(fill = "#56B4E9", alpha = 0.7) +
-  labs(title = "Distribution of Reported Malaria Deaths by Year (Global)",
-       y = "Number of Deaths", x = "Year") +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+## Methodology
 
-# 🟠 Scatter plot of deaths over time, faceted by WHO Region
-reported %>% 
-  drop_na(No..of.deaths) %>% 
-  mutate(Year = as.factor(Year)) %>%
-  ggplot(aes(x = Year, y = No..of.deaths)) +
-  geom_point(color = "#D55E00", alpha = 0.7) +
-  labs(title = "Reported Malaria Deaths Over Time by WHO Region",
-       y = "Number of Deaths", x = "Year") +
-  facet_wrap(~ WHO.Region, scales = "free") +
-  theme_minimal() +
-  theme(plot.title = element_text(size = 16, face = "bold"),
-        axis.text.x = element_text(angle = 45, hjust = 1))
+-   **Dataset:** WHO malaria data (reported cases and deaths by country and year).
+-   **Visualization Methods:**
+    -   Scatter plots to show temporal trends.
+    -   Dynamic choropleth maps to demonstrate spatial changes.
 
+# Dataset Overview
+
+-   **Total Rows:** 1,944
+-   **Total Columns:** 5
+    -   `Country` (Categorical): 190 unique country names.
+    -   `Year` (Numerical): Reporting year (2000–2017).
+    -   `No. of cases` (Numerical): Reported malaria cases (0 to 15.1 million).
+    -   `No. of deaths` (Numerical): Reported malaria deaths (0 to 39,054).
+    -   `WHO Region` (Categorical): 6 regions (Africa, Americas, Eastern Mediterranean, Europe, South-East Asia, Western Pacific).
+
+# Results
+
+## Total Reported Malaria Cases Over Time
+
+```{r malaria-cases-over-time}
+# Insert your code for plotting total malaria cases over time
 ```
+
+## Distribution of Reported Malaria Deaths by Year (Global)
+
+```{r malaria-deaths-global}
+# Insert your code for plotting global malaria deaths distribution by year
+```
+
+## Reported Malaria Deaths Over Time by Region
+
+```{r malaria-deaths-region}
+# Insert your code for plotting deaths over time by region
+```
+
+## Total Reported Malaria Deaths Over Time by Region
+
+```{r total-deaths-region}
+# Insert your code for plotting total deaths by region over time
+```
+
+## Reported Cases by Country Over Time
+
+```{r cases-by-country}
+# Insert your code for plotting cases by country
+```
+
+## Reported Deaths by Country Over Time
+
+```{r deaths-by-country}
+# Insert your code for plotting deaths by country
+```
+
+## Malaria Cases and Deaths by Country Over Time
+
+```{r cases-deaths-country}
+# Insert your code for a combined plot of cases and deaths over time by country
+```
+
+# Future Work and Questions
+
+-   Explore causes behind regional differences (e.g., healthcare access, climate, interventions).
+-   Update the dataset with more recent years.
+-   Investigate specific country case studies for deeper insights.
+-   Analyze the relationship between malaria interventions and case/death trends.
+
+# Conclusion
+
+Teamwork and visual analytics have enabled a clearer understanding of malaria's global impact. Future studies should continue to leverage updated data and innovative visualization techniques to deepen insights and support global health initiatives.
 
 ```{r}
 # Group by WHO Region and Year, then sum the deaths

@@ -56,3 +56,21 @@ reported %>%
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
+
+```{r}
+# Group by WHO Region and Year, then sum the deaths
+deaths_by_region <- reported %>%
+  drop_na(No..of.deaths) %>%
+  group_by(WHO.Region, Year) %>%
+  summarise(total_deaths = sum(No..of.deaths), .groups = 'drop')
+
+# Line plot: deaths over time, one line per WHO region
+ggplot(deaths_by_region, aes(x = Year, y = total_deaths, color = WHO.Region)) +
+  geom_line(size = 1.2) +
+  labs(title = "Total Reported Malaria Deaths Over Time by WHO Region",
+       y = "Total Deaths", x = "Year", color = "WHO Region") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```

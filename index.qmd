@@ -44,7 +44,17 @@ Malaria is a life-threatening disease caused by infected female *Anopheles* mosq
 ## Total Reported Malaria Cases Over Time
 
 ```{r malaria-cases-over-time}
-# Insert your code for plotting total malaria cases over time
+
+reported %>%
+  group_by(Year) %>%
+  summarize(total_cases = sum(No..of.cases, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year, y = total_cases, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Total Reported Malaria Cases Over Time",
+       x = "Year",
+       y = "Total Cases") +
+  theme_minimal()
 ```
 
 ## Distribution of Reported Malaria Deaths by Year (Global)

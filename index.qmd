@@ -5,11 +5,11 @@ execute:
 code-fold: false  # change to true to fold the code chunks
 ---
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 # Introduction
 
 Malaria is a life-threatening disease caused by infected female *Anopheles* mosquitoes. This analysis explores malaria cases from 2000 to 2017 globally and by regions (Americas, Africa, Eastern Mediterranean, Europe, South-East Asia, Western Pacific), focusing on trends in case numbers and death rates.
-
 # Research Question, Aims, and Methodology
 
 ## Research Question
@@ -301,3 +301,5 @@ ggplot(deaths_by_region, aes(x = Year, y = total_deaths, color = WHO.Region)) +
 
 ```
 >>>>>>> 57d997347f41c473e3f97947084d48fae1c901e8
+=======
+>>>>>>> 70dd6257b15f21f86d8c711e051e94d3e3d3eb7e

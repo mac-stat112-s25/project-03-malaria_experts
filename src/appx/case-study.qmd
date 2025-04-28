@@ -7,7 +7,6 @@ editor:
 
 Your case study will go here.
 
-article: https://chatgpt.com/c/67f95138-6368-8007-8b0b-4b5f5e98968b
 
 1.  Germany’s Multiparty System Unlike the U.S. two-party system, Germany's Bundestag includes multiple significant parties.
     The chart shows that no party typically wins a majority, which necessitates coalition governments.

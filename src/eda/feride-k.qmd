@@ -31,8 +31,7 @@ reported %>%
   
 ```
 
-> The variance is due to these data being globally.
-> Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
+> The variance is due to these data being globally. Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
 
 ```{r}
 reported %>% 

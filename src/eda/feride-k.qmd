@@ -31,7 +31,8 @@ reported %>%
   
 ```
 
-> The variance is due to these data being globally. Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
+> The variance is due to these data being globally.
+> Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
 
 ```{r}
 reported %>% 
@@ -100,42 +101,10 @@ unique(reported$WHO.Region)
 
 ```
 
-```{r}
-library(tidyverse)
-library(ggplot2)
-library(data.table)
+# Fit separate models by WHO region
 
-# Set data directory
-dir1 <- "../input/malaria-dataset/"
+lm_models_by_region \<- reported_clean %\>% group_by(WHO.Region) %\>% do(model = lm(No..of.deaths \~ Year, data = .))
 
-# Load datasets
-estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv", stringsAsFactors = FALSE)
-incidence <- read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv", stringsAsFactors = FALSE)
-reported <- read.csv("../../data/archive 2/reported_numbers.csv", stringsAsFactors = FALSE)
+# View model summaries for each region
 
-# Merge reported and incidence datasets
-data <- reported %>% 
-  left_join(incidence, by = c("Country", "Year", "WHO.Region")) %>% 
-  rename("No.of.cases" = "No..of.cases.x",
-         "No.of.cases.per.1000.pop.at.risk" = "No..of.cases.y")
-
-# Set plot size
-options(repr.plot.width = 14, repr.plot.height = 10)
-
-# 📈 Line graph of deaths over time by WHO Region
-reported %>% 
-  drop_na(No..of.deaths) %>% 
-  group_by(WHO.Region, Year) %>%  # <-- group by region and year
-  summarize(total_deaths = sum(No..of.deaths, na.rm = TRUE)) %>% 
-  ggplot(aes(x = Year, y = total_deaths, color = WHO.Region, group = WHO.Region)) +
-  geom_line(size = 1.2) +
-  geom_point(size = 2) +
-  labs(title = "Reported Malaria Deaths Over Time by WHO Region",
-       x = "Year",
-       y = "Total Reported Deaths",
-       color = "WHO Region") +
-  theme_minimal() +
-  theme(plot.title = element_text(size = 16, face = "bold"),
-        axis.text.x = element_text(angle = 45, hjust = 1))
-
-```
+lm_models_by_region\$model %\>% lapply(summary)

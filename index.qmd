@@ -272,7 +272,6 @@ reported %>%
 
 ```
 
->>>>>>> Stashed changes
 ```{r}
 # Group by WHO Region and Year, then sum the deaths
 deaths_by_region <- reported %>%
@@ -290,4 +289,4 @@ ggplot(deaths_by_region, aes(x = Year, y = total_deaths, color = WHO.Region)) +
         axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
->>>>>>> 57d997347f41c473e3f97947084d48fae1c901e8
+

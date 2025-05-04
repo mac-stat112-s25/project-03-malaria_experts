@@ -42,11 +42,13 @@ fig <- plot_ly(
 fig <- fig %>%
   layout(
     title = "Reported Malaria Cases Over Time",
-    geo = list(
-      showframe = FALSE,
-      showcoastlines = FALSE
-    ),
-    coloraxis = list(colorbar = list(title = "Cases"))
+   geo = list(showframe = FALSE,
+               showcoastlines = FALSE,
+               showcountries = TRUE,
+               countrycolor = "gray",
+               projection = list(type = "equirectangular"),
+               bgcolor = "white",
+               landcolor = "white")
   )
 
 fig

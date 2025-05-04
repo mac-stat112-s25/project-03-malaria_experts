@@ -31,8 +31,7 @@ reported %>%
   
 ```
 
-> The variance is due to these data being globally.
-> Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
+> The variance is due to these data being globally. Malaria death effects certain regions around the world hence we cannot say \# or use mean deaths etc
 
 ```{r}
 reported %>% 
@@ -94,16 +93,17 @@ reported %>%
 
 ```
 
+general trends- what is going on in this region
+
 ```{r}
-# Fit separate models by WHO region
-lm_models_by_region <- reported_clean %>%
-  group_by(WHO.Region) %>%
-  do(model = lm(No..of.deaths ~ Year, data = .))
-
-# View model summaries for each region
-lm_models_by_region$model %>% lapply(summary)
-
+unique(reported$WHO.Region)
 
 ```
 
-general trends- what is going on in this region
+# Fit separate models by WHO region
+
+lm_models_by_region \<- reported_clean %\>% group_by(WHO.Region) %\>% do(model = lm(No..of.deaths \~ Year, data = .))
+
+# View model summaries for each region
+
+lm_models_by_region\$model %\>% lapply(summary)

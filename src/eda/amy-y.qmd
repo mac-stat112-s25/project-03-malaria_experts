@@ -163,8 +163,10 @@ malaria_clean <- reported %>%
     deaths = `No..of.deaths`
   )
 
+death_scale_labels <- c(1000, 10000, 100000)
+death_scale_labels <- c("1k Deaths", "10k Deaths", "100k Deaths")
+
 fig <- plot_ly() %>%
-  # Choropleth layer for total cases
   add_trace(
     data = malaria_clean,
     type = "choropleth",
@@ -181,22 +183,24 @@ fig <- plot_ly() %>%
     ),
     hoverinfo = "text"
   ) %>%
+
   
-  # Scattergeo layer for deaths as circle markers
   add_trace(
     data = malaria_clean,
     type = "scattergeo",
+    mode = "markers",
     locations = ~country,
     locationmode = "country names",
     frame = ~year,
     marker = list(
-      size = ~sqrt(deaths) / 100,  # Scale marker size
+      size = ~sqrt(death_scale_values) / 100,  
       color = "black",
       opacity = 0.5,
       line = list(width = 0)
     ),
-    hoverinfo = "none",  # Already shown in choropleth hover
-    showlegend = FALSE
+    showlegend = TRUE,
+    name = list(title = "Death Cases"),
+    legendgroup = "deaths"
   ) %>%
   
   layout(
@@ -212,9 +216,14 @@ fig <- plot_ly() %>%
     ),
     coloraxis = list(
       colorbar = list(title = "Cases")
+    ),
+    lengend = list(
+      title = list (text = "<b> Deaths (size) </b>"),
+      traceorder = "normal"
     )
    
   )
 fig
 ```
+
 

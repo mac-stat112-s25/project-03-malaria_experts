@@ -196,6 +196,15 @@ fig <- plot_ly() %>%
     frame = ~year,
     marker = list(
       size = ~sqrt(deaths) / 100,  
+<<<<<<< HEAD
+      color = "black",
+      opacity = 0.5,
+      line = list(width = 0)
+    ),
+    hoverinfo = "none",  
+    showlegend = TRUE,
+    name = list(title = "Death")
+=======
       colorscale = "Blues",
       opacity = 0.5,
       line = list(width = 0)
@@ -203,6 +212,7 @@ fig <- plot_ly() %>%
     showlegend = TRUE,
     name = list(title = "Death Cases"),
     legendgroup = "deaths"
+>>>>>>> 1a2bcf07f7cf16fc894522ad24e76ce1ede1606f
   ) %>%
   
   layout(

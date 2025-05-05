@@ -127,7 +127,6 @@ reported %>%
 
 ## Reported Cases by Country Over Time
 
-
 ```{r}
 malaria_clean <- reported %>%
   select(Country, Year, `No..of.cases`) %>%

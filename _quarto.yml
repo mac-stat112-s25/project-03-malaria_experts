@@ -42,11 +42,15 @@ book:
       chapters: 
       - src/et/feride-k.qmd
       - src/et/amy-y.qmd
+      - src/et/aisling-l.qmd
+      - src/et/zora-s.qmd
         
     - part: "EDA"
       chapters: 
       - src/eda/feride-k.qmd
       - src/eda/amy-y.qmd
+      - src/eda/aisling-l.qmd
+      - src/eda/zora-s/qmd
 
   appendices:
   - src/appx/proposal.qmd

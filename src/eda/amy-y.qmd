@@ -163,8 +163,10 @@ malaria_clean <- reported %>%
     deaths = `No..of.deaths`
   )
 
+death_scale_labels <- c(1000, 10000, 100000)
+death_scale_labels <- c("1k Deaths", "10k Deaths", "100k Deaths")
+
 fig <- plot_ly() %>%
-  # Choropleth layer for total cases
   add_trace(
     data = malaria_clean,
     type = "choropleth",
@@ -179,18 +181,22 @@ fig <- plot_ly() %>%
       "<br>Cases: ", format(cases, big.mark = ","),
       "<br>Deaths: ", format(deaths, big.mark = ",")
     ),
-    hoverinfo = "text"
+    hoverinfo = "text",
+    colorbar = list(title = "Total Cases"),
+    marker = list(line = list(color = "white", width = 0.5))
   ) %>%
+
   
-  # Scattergeo layer for deaths as circle markers
   add_trace(
     data = malaria_clean,
     type = "scattergeo",
+    mode = "markers",
     locations = ~country,
     locationmode = "country names",
     frame = ~year,
     marker = list(
       size = ~sqrt(deaths) / 100,  
+<<<<<<< HEAD
       color = "black",
       opacity = 0.5,
       line = list(width = 0)
@@ -198,6 +204,15 @@ fig <- plot_ly() %>%
     hoverinfo = "none",  
     showlegend = TRUE,
     name = list(title = "Death")
+=======
+      colorscale = "Blues",
+      opacity = 0.5,
+      line = list(width = 0)
+    ),
+    showlegend = TRUE,
+    name = list(title = "Death Cases"),
+    legendgroup = "deaths"
+>>>>>>> 1a2bcf07f7cf16fc894522ad24e76ce1ede1606f
   ) %>%
   
   layout(
@@ -213,9 +228,76 @@ fig <- plot_ly() %>%
     ),
     coloraxis = list(
       colorbar = list(title = "Cases")
+    ),
+    lengend = list(
+      title = list (text = "<b> Deaths (size) </b>"),
+      traceorder = "normal"
     )
-   
   )
 fig
+```
+
+```{r}
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`, `No..of.deaths`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`,
+    deaths = `No..of.deaths`
+  )
+
+
+fig <- plot_ly() %>%
+  add_trace(
+    data = malaria_clean,
+    type = "choropleth",
+    locations = ~country,
+    locationmode = "country names",
+    z = ~cases,
+    frame = ~year,
+    colorscale = "Blues",
+    reversescale = TRUE,
+    text = ~paste("Country:", country,
+                  "<br>Total Cases:", format(cases, big.mark = ","),
+                  "<br>Deaths:", format(deaths, big.mark = ",")),
+    hoverinfo = "text",
+    colorbar = list(title = "Total Cases"),
+    marker = list(line = list(color = "white", width = 0.5))
+  ) %>%
+  
+
+  add_trace(
+    data = malaria_clean,
+    type = "scattergeo",
+    locations = ~country,
+    locationmode = "country names",
+    frame = ~year,
+    marker = list(
+      size = ~sqrt(deaths) * 0.25,
+      color = 'red',
+      opacity = 0.6,
+      line = list(width = 0)
+    ),
+    hoverinfo = "none",
+    showlegend = FALSE
+  ) %>%
+  
+  # Layout
+  layout(
+    title = "Global Malaria Cases and Deaths from 2000 to 2017",
+    geo = list(
+      showframe = FALSE,
+      showcountries = TRUE,
+      showcoastlines = FALSE,
+      countrycolor = "grey",
+      landcolor = "lightgrey",
+      projection = list(type = "equirectangular"),
+      bgcolor = "white"
+    )
+  )
+
+fig
+
 ```
 

@@ -190,13 +190,14 @@ fig <- plot_ly() %>%
     locationmode = "country names",
     frame = ~year,
     marker = list(
-      size = ~sqrt(deaths) / 100,  # Scale marker size
+      size = ~sqrt(deaths) / 100,  
       color = "black",
       opacity = 0.5,
       line = list(width = 0)
     ),
-    hoverinfo = "none",  # Already shown in choropleth hover
-    showlegend = FALSE
+    hoverinfo = "none",  
+    showlegend = TRUE,
+    name = list(title = "Death")
   ) %>%
   
   layout(

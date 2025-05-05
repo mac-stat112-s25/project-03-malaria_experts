@@ -137,7 +137,6 @@ malaria_clean <- reported %>%
     cases = `No..of.cases`
   )
 ```
-```
 
 ```{r}
 library(plotly)

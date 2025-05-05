@@ -7,7 +7,8 @@ code-fold: false  # change to true to fold the code chunk
 
 # Introduction
 
-Malaria is a life-threatening disease caused by infected female *Anopheles* mosquitoes. This analysis explores malaria cases from 2000 to 2017 globally and by regions (Americas, Africa, Eastern Mediterranean, Europe, South-East Asia, Western Pacific), focusing on trends in case numbers and death rates.
+Malaria is a life-threatening disease caused by infected female *Anopheles* mosquitoes.
+This analysis explores malaria cases from 2000 to 2017 globally and by regions (Americas, Africa, Eastern Mediterranean, Europe, South-East Asia, Western Pacific), focusing on trends in case numbers and death rates.
 
 # Research Question, Aims, and Methodology
 
@@ -45,9 +46,12 @@ library(ggplot2)
 library(tidyverse)
 library(dplyr)
 
-estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
-incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
-reported <-read.csv("../../data/archive 2/reported_numbers.csv") #use this one
+file.exists("data/archive 2/estimated_numbers.csv")
+estimated_numbers <- read.csv("data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("data/archive 2/reported_numbers.csv") 
+
+ #use this one
 ```
 
 ## Total Reported Malaria Cases Over Time
@@ -282,4 +286,5 @@ fig
 
 # Conclusion
 
-Teamwork and visual analytics have enabled a clearer understanding of malaria's global impact. Future studies should continue to leverage updated data and innovative visualization techniques to deepen insights and support global health initiatives.
+Teamwork and visual analytics have enabled a clearer understanding of malaria's global impact.
+Future studies should continue to leverage updated data and innovative visualization techniques to deepen insights and support global health initiatives.

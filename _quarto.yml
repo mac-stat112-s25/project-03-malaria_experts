@@ -41,7 +41,7 @@ book:
     - part: "Effevtive Teamwork"
       chapters: 
       - src/et/feride-k.qmd
-      - src/et/amy-y.qmd
+ 
         
     - part: "EDA"
       chapters: 

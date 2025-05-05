@@ -40,6 +40,17 @@ Malaria is a life-threatening disease caused by infected female *Anopheles* mosq
 
 # Results
 
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv") #use this one
+```
+
 ## Total Reported Malaria Cases Over Time
 
 ```{r}

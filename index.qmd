@@ -40,7 +40,6 @@ Malaria is a life-threatening disease caused by infected female *Anopheles* mosq
 
 # Results
 
-
 ```{r}
 library(ggplot2)
 library(tidyverse)

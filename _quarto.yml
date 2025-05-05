@@ -11,7 +11,7 @@ project:
 
 
 book:
-  title: "project title"
+  title: "Malaria 2000-2017"
   author: ["Feride Karatas", "Amy Yang", "Zora Shi","Aisling Li"]
   date: today  # use today to update date published based on last time project was edited
   date-format: full

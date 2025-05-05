@@ -127,6 +127,18 @@ reported %>%
 
 ## Reported Cases by Country Over Time
 
+
+```{r}
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`
+  )
+```
+```
+
 ```{r}
 library(plotly)
 fig <- plot_ly(

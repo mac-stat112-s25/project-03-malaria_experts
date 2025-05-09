@@ -4,6 +4,11 @@ execute:
   echo: true      # change to true to show the code
 code-fold: false  # change to true to fold the code chunk
 ---
+# Presentation Recording
+```{r}
+cat("Watch the Presentation: https://youtu.be/h7a-UFw0gOk")
+```
+
 
 # Introduction
 
@@ -221,6 +226,9 @@ fig <- fig %>%
 fig
 
 ```
+*Explanation*
+This map visualizes the number of reported malaria-related deaths by country from the year 2000 to 2017. Each country is colored on a gradient from light to dark red, where darker shades indicate a higher number of deaths. As the animation progresses through time, we can observe how the burden of malaria shifts across regions. Notably, countries in sub-Saharan Africa—especially the Democratic Republic of Congo and Nigeria—consistently show the darkest shades, highlighting their persistent struggle with malaria mortality. This temporal and spatial visualization helps emphasize where intervention efforts have been or still need to be concentrated.
+
 
 ## Malaria Cases and Deaths by Country Over Time
 
@@ -270,7 +278,6 @@ fig <- plot_ly() %>%
     showlegend = FALSE
   ) %>%
   
-  # Layout
   layout(
     title = "Global Malaria Cases and Deaths from 2000 to 2017",
     geo = list(
@@ -287,6 +294,13 @@ fig <- plot_ly() %>%
 fig
 
 ```
+*Explanation*
+
+This interactive map illustrates global malaria cases and deaths from the year 2000 to 2017. The background color of each country represents the total number of malaria cases, using a blue gradient—darker blue indicates higher case counts. Overlaying the map, we use red circles to represent the number of reported deaths. The larger the circle, the higher the death toll.
+
+This dual-encoded map lets us compare both the prevalence of malaria and its mortality burden at once. For instance, you can see that many central and western African countries not only have dark blue shading—indicating high case numbers—but also large red circles, revealing significant death counts. Meanwhile, other regions may have lighter shades with smaller circles, showing lower disease burden.
+
+Overall, this visualization helps us track the geographic and temporal patterns of malaria, highlighting where the disease hits hardest and where public health efforts should be prioritized.
 
 ## Future Work and Questions
 

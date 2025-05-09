@@ -1,5 +1,31 @@
 ---
 title: "Case Study"
+editor: 
+  markdown: 
+    wrap: sentence
 ---
 
 Your case study will go here.
+
+1.  Germany’s Multiparty System Unlike the U.S. two-party system, Germany's Bundestag includes multiple significant parties.
+    The chart shows that no party typically wins a majority, which necessitates coalition governments.
+    CDU/CSU (center-right) and SPD (center-left) are the largest parties but have seen declining shares over time, making smaller parties like the Greens, FDP, and AfD increasingly relevant in coalition-building.
+
+2.  Party Ideology Distribution The ideological spectrum chart maps German parties from left to right.
+    The Left (far-left) and AfD (far-right) anchor the extremes.
+    SPD, Greens, and CDU/CSU are more centrist, though CDU leans conservative.
+    The chart reveals that German political ideology is more left-leaning overall than U.S. counterparts — even the CDU is not as far right as American Republicans.
+
+3.  Voter Base by Region (East vs. West) A geographic map shows stark regional divides: The Left dominates in the former East Germany.
+    CDU and SPD perform better in the wealthier West.
+    AfD shows stronger support in economically disadvantaged eastern regions, reflecting discontent.
+    This highlights how historical and economic divisions continue to shape voter alignment decades after reunification.
+
+4.  Economic Status and Party Affiliation A scatterplot links income and education levels to party support.
+    AfD draws support from lower-income, less-educated voters — similar to Trump’s base.
+    Greens and FDP attract wealthier, more educated demographics.
+    CDU and SPD are more broadly distributed but still reflect socioeconomic divides.
+
+5.  AfD’s Rise and Fall A line graph tracks AfD’s polling trajectory: The party rose sharply during the refugee crisis in 2015.
+    It peaked around 15% in late 2016, then declined to about 10% by mid-2017.
+    This trend aligns with reduced immigration levels and possible public reaction to global right-wing populism.

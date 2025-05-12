@@ -41,9 +41,13 @@ book:
     - part: "Effevtive Teamwork"
       chapters: 
       - src/et/feride-k.qmd
+<<<<<<< HEAD
       - src/et/amy-y.qmd
       - src/et/aisling-l.qmd
       - src/et/zora-s.qmd
+=======
+ 
+>>>>>>> 9514e59f399f8888908a8c6b4e179f01ad792727
         
     - part: "EDA"
       chapters: 

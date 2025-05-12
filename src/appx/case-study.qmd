@@ -7,7 +7,6 @@ editor:
 
 Your case study will go here.
 
-
 1.  Germany’s Multiparty System Unlike the U.S. two-party system, Germany's Bundestag includes multiple significant parties.
     The chart shows that no party typically wins a majority, which necessitates coalition governments.
     CDU/CSU (center-right) and SPD (center-left) are the largest parties but have seen declining shares over time, making smaller parties like the Greens, FDP, and AfD increasingly relevant in coalition-building.

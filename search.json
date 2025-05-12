@@ -4,57 +4,117 @@
     "href": "index.html",
     "title": "Malaria 2000-2017",
     "section": "",
-    "text": "0.1 Presentation Recording\ncat(\"Watch the Presentation: https://youtu.be/h7a-UFw0gOk\")\n\nWatch the Presentation: https://youtu.be/h7a-UFw0gOk\nMalaria is a life-threatening disease which continues to claim hundreds of thousands of lives each year, particularly in developing regions with limited access to healthcare infrastructure. Transmitted through the bite of infected female Anopheles mosquitoes, malaria is both a biological and social challenge that intersects with issues of poverty, geography, and political will. This report presents an in-depth data-driven exploration of malaria cases and deaths from 2000 to 2017. It aims to uncover global and regional patterns, analyze changes over time, and offer insights into how the fight against malaria has progressed in different parts of the world.\nThe central question guiding this study is: How have global malaria cases and death rates evolved over time, and how do these trends vary across WHO regions and countries between 2000 and 2017? To investigate this, we used a dataset provided by the World Health Organization that includes annual country-level records of reported malaria cases and deaths, categorized by WHO region. We employed both static and animated visualizations to reveal temporal and spatial patterns in the data. This approach enables us to not only assess long-term global trends but also to highlight persistent regional disparities and emerging areas of concern.",
+    "text": "1 Presentation Recording\nWatch the Presentation: https://youtu.be/h7a-UFw0gOk",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
     ]
   },
   {
-    "objectID": "index.html#what-is-the-overall-trend",
-    "href": "index.html#what-is-the-overall-trend",
+    "objectID": "index.html#research-question",
+    "href": "index.html#research-question",
     "title": "Malaria 2000-2017",
-    "section": "\n0.2 What is the overall trend?",
-    "text": "0.2 What is the overall trend?\n\nlibrary(ggplot2)\nlibrary(tidyverse)\nlibrary(dplyr)\n\nfile.exists(\"data/archive 2/estimated_numbers.csv\")\n\n[1] TRUE\n\nestimated_numbers &lt;- read.csv(\"data/archive 2/estimated_numbers.csv\") \nincidence &lt;-read.csv(\"data/archive 2/incidence_per_1000_pop_at_risk.csv\")\nreported &lt;-read.csv(\"data/archive 2/reported_numbers.csv\") \n\nreported$Year &lt;- as.factor(reported$Year)\nreported %&gt;%\n  group_by(Year) %&gt;%\n  summarize(total_cases = sum(No..of.cases, na.rm = TRUE)) %&gt;%\n  ggplot(aes(x = Year, y = total_cases, group = 1)) +\n  geom_line() +\n  geom_point() +\n  labs(title = \"Total Reported Malaria Cases Over Time\",\n       x = \"Year\",\n       y = \"Total Cases\") +\n  theme_minimal()\n\n\n\n\n\n\n\nBetween 2000 and 2007, the number of reported malaria cases globally remained relatively stable—hovering around 10 to 15 million per year. But starting around 2008, there is a dramatic shift. As shown in this plot, reported cases begin to rise sharply, reaching over 125 million by 2017. This pattern appears to contradict the common belief that malaria is steadily declining worldwide.\nHowever, the increase may reflect expanded diagnostic capacity and improved surveillance, rather than an actual surge in transmission. Many countries introduced more comprehensive reporting systems in the 2010s, which likely resulted in a higher number of cases being documented. In other words, we might be seeing more malaria not because the situation is worsening, but because we’re getting better at counting it.",
+    "section": "\n3.1 Research Question",
+    "text": "3.1 Research Question\nHow has global malaria cases and reported death cases changed over time and across different regions from 2000 to 2017?",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
     ]
   },
   {
-    "objectID": "index.html#are-people-dying-from-it",
-    "href": "index.html#are-people-dying-from-it",
+    "objectID": "index.html#aims",
+    "href": "index.html#aims",
     "title": "Malaria 2000-2017",
-    "section": "\n0.3 Are people dying from it?",
-    "text": "0.3 Are people dying from it?\n\nreported %&gt;% \n  drop_na(No..of.deaths) %&gt;% \n  mutate(Year = as.factor(Year)) %&gt;%\n  ggplot(aes(x = Year, y = No..of.deaths)) +\n  geom_boxplot(fill = \"#56B4E9\", alpha = 0.7) +\n  labs(title = \"Distribution of Reported Malaria Deaths by Year (Global)\",\n       y = \"Number of Deaths\", x = \"Year\") +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1))\n\n\n\n\n\n\n\nTo understand whether more cases led to more deaths, we can turn to the second chart: a boxplot showing the distribution of reported malaria deaths by country each year. Despite the sharp increase in reported cases, the distribution of deaths remains relatively wide but doesn’t follow the same sharp upward trajectory. Most countries consistently report relatively low death numbers, while a small number continue to report high fatalities each year—sometimes over 50,000.\nThis suggests that while malaria remains widespread, it is becoming less deadly overall, possibly due to wider access to treatment and earlier diagnosis. However, the range between countries is still large. Some countries have clearly succeeded in reducing malaria mortality, while others continue to struggle.",
+    "section": "\n3.2 Aims",
+    "text": "3.2 Aims\n\nTo visualize trends in malaria cases and deaths globally from 2000 onwards.\nTo analyze regional differences and identify patterns or anomalies over time.\nTo better understand where malaria remains a major public health challenge.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
     ]
   },
   {
-    "objectID": "index.html#where-are-most-people-dying",
-    "href": "index.html#where-are-most-people-dying",
+    "objectID": "index.html#methodology",
+    "href": "index.html#methodology",
     "title": "Malaria 2000-2017",
-    "section": "\n0.4 Where are most people dying?",
-    "text": "0.4 Where are most people dying?\n\nreported %&gt;% \n  drop_na(No..of.deaths) %&gt;% \n  mutate(Year = as.factor(Year)) %&gt;%\n  ggplot(aes(x = Year, y = No..of.deaths)) +\n  geom_point(color = \"#D55E00\", alpha = 0.7) +\n  labs(title = \"Reported Malaria Deaths Over Time by WHO Region\",\n       y = \"Number of Deaths\", x = \"Year\") +\n  facet_wrap(~ WHO.Region, scales = \"free\") +\n  theme_minimal() +\n  theme(plot.title = element_text(size = 16, face = \"bold\"),\n        axis.text.x = element_text(angle = 45, hjust = 1))\n\n\n\n\n\n\n\n\n# 📈 Line graph of deaths over time by WHO Region\nreported %&gt;% \n  drop_na(No..of.deaths) %&gt;% \n  group_by(WHO.Region, Year) %&gt;%  # &lt;-- group by region and year\n  summarize(total_deaths = sum(No..of.deaths, na.rm = TRUE)) %&gt;% \n  ggplot(aes(x = Year, y = total_deaths, color = WHO.Region, group = WHO.Region)) +\n  geom_line(size = 1.2) +\n  geom_point(size = 2) +\n  labs(title = \"Reported Malaria Deaths Over Time by WHO Region\",\n       x = \"Year\",\n       y = \"Total Reported Deaths\",\n       color = \"WHO Region\") +\n  theme_minimal() +\n  theme(plot.title = element_text(size = 16, face = \"bold\"),\n        axis.text.x = element_text(angle = 45, hjust = 1))\n\n`summarise()` has grouped output by 'WHO.Region'. You can override using the\n`.groups` argument.\n\n\nWarning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.\nℹ Please use `linewidth` instead.\n\n\n\n\n\n\n\n\nThe next two charts break down death patterns by WHO region—first using individual dot plots for each region, then summarizing total regional deaths over time. The pattern here is unmistakable: Africa accounts for the vast majority of global malaria deaths, and this has remained true throughout the entire 2000–2017 period.\nIn contrast, other regions such as Europe and the Americas report very low death counts, often close to zero. Even South-East Asia, once a major malaria hotspot, shows a steady decline in mortality across the 18 years. These trends reveal a stark inequality in the global burden of malaria. While some regions are approaching elimination, others—especially in sub-Saharan Africa—continue to face high and persistent mortality.",
+    "section": "\n3.3 Methodology",
+    "text": "3.3 Methodology\n\n\nDataset: WHO malaria data (reported cases and deaths by country and year).\n\nVisualization Methods:\n\nScatter plots to show temporal trends.\nDynamic choropleth maps to demonstrate spatial changes.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
     ]
   },
   {
-    "objectID": "index.html#lets-take-a-closer-look",
-    "href": "index.html#lets-take-a-closer-look",
+    "objectID": "index.html#total-reported-malaria-cases-over-time",
+    "href": "index.html#total-reported-malaria-cases-over-time",
     "title": "Malaria 2000-2017",
-    "section": "\n0.5 Let’s take a closer look",
-    "text": "0.5 Let’s take a closer look\n\nmalaria_clean &lt;- reported %&gt;%\n  select(Country, Year, `No..of.cases`) %&gt;%\n  rename(\n    country = Country,\n    year = Year,\n    cases = `No..of.cases`\n  )\n\n\nlibrary(plotly)\n\n\nAttaching package: 'plotly'\n\n\nThe following object is masked from 'package:ggplot2':\n\n    last_plot\n\n\nThe following object is masked from 'package:stats':\n\n    filter\n\n\nThe following object is masked from 'package:graphics':\n\n    layout\n\nfig &lt;- plot_ly(\n  data = malaria_clean,\n  locations = ~country,\n  locationmode = 'country names',\n  z = ~cases,\n  text = ~paste(country, \"&lt;br&gt;Cases:\", cases),\n  type = 'choropleth',\n  frame = ~year,\n  colorscale = 'Reds',\n  marker = list(line = list(color = \"gray\", width = 0.5))\n)\n\nfig &lt;- fig %&gt;%\n  layout(\n    title = \"Reported Malaria Cases Over Time\",\n   geo = list(showframe = FALSE,\n               showcoastlines = FALSE,\n               showcountries = TRUE,\n               countrycolor = \"gray\",\n               projection = list(type = \"equirectangular\"),\n               bgcolor = \"white\",\n               landcolor = \"white\")\n  )\n\nfig\n\nWarning: Ignoring 234 observations\n\n\n\n\n\n\n\n# Install and load countrycode package if not already installed\nif (!require(countrycode)) {\n  install.packages(\"countrycode\")\n}\n\nLoading required package: countrycode\n\nlibrary(countrycode)\n\nlibrary(tidyverse)\nlibrary(plotly)\n\n# Example: cleaning reported data\nreported_clean_2 &lt;- reported %&gt;%\n  mutate(\n    country = countrycode(Country, origin = \"country.name\", destination = \"iso3c\")\n    # year = as.integer(Year),\n    # deaths = as.numeric(No..of.deaths)\n  ) %&gt;%\n  filter(!is.na(country)\n         # !is.na(year),\n         # !is.na(deaths)\n  )\n\n# Create animated choropleth plot\nfig &lt;- plot_ly(\n  data = reported_clean_2,\n  type = \"choropleth\",\n  locations = ~country,         # ISO3 codes\n  z = ~No..of.deaths,           # Coloring by deaths\n  frame = ~Year,                # Animation frame by year\n  colorscale = \"Reds\",\n  text = ~paste(Country, \"&lt;br&gt;Deaths:\", No..of.deaths),\n  colorbar = list(title = \"Deaths\"),\n  reversescale = FALSE\n)\n\nfig &lt;- fig %&gt;%\n  layout(\n    title = \"Reported Deaths by Country Over Time\",\n    geo = list(\n      showframe = FALSE,\n      showcoastlines = FALSE,\n      showcountries = TRUE,\n      countrycolor = \"gray\",\n      projection =list(type = \"equirectangular\"),\n      bgcolor = \"white\",\n      landcolor = \"white\"\n    )\n  )\n\nfig\n\nWarning: Ignoring 269 observations\n\n\n\n\n\n\n\nmalaria_clean &lt;- reported %&gt;%\n  select(Country, Year, `No..of.cases`, `No..of.deaths`) %&gt;%\n  rename(\n    country = Country,\n    year = Year,\n    cases = `No..of.cases`,\n    deaths = `No..of.deaths`\n  )\n\n\nfig &lt;- plot_ly() %&gt;%\n  add_trace(\n    data = malaria_clean,\n    type = \"choropleth\",\n    locations = ~country,\n    locationmode = \"country names\",\n    z = ~cases,\n    frame = ~year,\n    colorscale = \"Blues\",\n    reversescale = TRUE,\n    text = ~paste(\"Country:\", country,\n                  \"&lt;br&gt;Total Cases:\", format(cases, big.mark = \",\"),\n                  \"&lt;br&gt;Deaths:\", format(deaths, big.mark = \",\")),\n    hoverinfo = \"text\",\n    colorbar = list(title = \"Total Cases\"),\n    marker = list(line = list(color = \"white\", width = 0.5))\n  ) %&gt;%\n  \n\n  add_trace(\n    data = malaria_clean,\n    type = \"scattergeo\",\n    locations = ~country,\n    locationmode = \"country names\",\n    frame = ~year,\n    marker = list(\n      size = ~sqrt(deaths) * 0.25,\n      color = 'red',\n      opacity = 0.6,\n      line = list(width = 0)\n    ),\n    hoverinfo = \"none\",\n    showlegend = FALSE\n  ) %&gt;%\n  \n  layout(\n    title = \"Global Malaria Cases and Deaths from 2000 to 2017\",\n    geo = list(\n      showframe = FALSE,\n      showcountries = TRUE,\n      showcoastlines = FALSE,\n      countrycolor = \"grey\",\n      landcolor = \"lightgrey\",\n      projection = list(type = \"equirectangular\"),\n      bgcolor = \"white\"\n    )\n  )\n\nfig\n\nWarning: Ignoring 234 observations\n\n\nNo scattergeo mode specifed:\n  Setting the mode to markers\n  Read more about this attribute -&gt; https://plotly.com/r/reference/#scatter-mode\n\n\n\n\n\n\nSo far, we’ve looked at overall trends and regional disparities. But what does the malaria burden look like at the country level? Using interactive Plotly maps, we can track changes over time and visualize not just where malaria is spreading, but where it’s killing.\nThe first map focuses on reported malaria cases from 2000 to 2017. Here, countries like India, Brazil, and Indonesia appear prominently, with India consistently reporting over 2 million cases per year. Interestingly, many African countries show little or no shading in early years—not because malaria wasn’t present, but because surveillance systems were still developing. Over time, these countries become more visible, reinforcing the idea that part of the global increase in reported cases may be due to improved detection rather than worsening transmission.\nThe second map shows malaria-related deaths, and the picture shifts dramatically. South Asian and South American countries that previously looked severe now appear much lighter. Meanwhile, central and western African countries dominate the death map, with the darkest shades consistently appearing in places like Nigeria and the Democratic Republic of Congo. This highlights a critical distinction: many regions have high numbers of infections, but only some face the compounded burden of both high infection and high mortality, often due to weaker healthcare systems. The final map puts everything together. Background shading represents case counts, while red circles denote the number of deaths. Countries like India are dark blue but have small red circles—indicating effective treatment and relatively low fatality rates. In contrast, the large red circles clustered across central Africa tell a different story: many of these countries are not only struggling with high malaria transmission, but also lack the infrastructure to prevent deaths.\nThese maps don’t just tell us where malaria is. They show us where it is deadliest. And that’s where the world’s attention and resources need to stay focused.",
+    "section": "\n5.1 Total Reported Malaria Cases Over Time",
+    "text": "5.1 Total Reported Malaria Cases Over Time",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
     ]
   },
   {
-    "objectID": "index.html#where-do-we-go-from-here",
-    "href": "index.html#where-do-we-go-from-here",
+    "objectID": "index.html#distribution-of-reported-malaria-deaths-by-year-global",
+    "href": "index.html#distribution-of-reported-malaria-deaths-by-year-global",
     "title": "Malaria 2000-2017",
-    "section": "\n0.6 Where do we go from here?",
-    "text": "0.6 Where do we go from here?\nThe data makes one thing clear: malaria is not a disease of the past—it is an ongoing global emergency, and one that is still evolving. While surveillance and treatment have improved in many countries, millions of people remain at risk, and tens of thousands still die every year from a preventable and treatable illness.\nAs we move forward, the goal is not just to reduce numbers on a chart, but to close the global gap in prevention and care. That means targeted investment in the regions that need it most, continued innovation in diagnostics and treatment, and stronger international cooperation. Data like this helps us understand where the problems are. What happens next depends on whether we act on it.",
+    "section": "\n5.2 Distribution of Reported Malaria Deaths by Year (Global)",
+    "text": "5.2 Distribution of Reported Malaria Deaths by Year (Global)",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#reported-malaria-deaths-over-time-by-region",
+    "href": "index.html#reported-malaria-deaths-over-time-by-region",
+    "title": "Malaria 2000-2017",
+    "section": "\n5.3 Reported Malaria Deaths Over Time by Region",
+    "text": "5.3 Reported Malaria Deaths Over Time by Region",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#total-reported-malaria-deaths-over-time-by-region",
+    "href": "index.html#total-reported-malaria-deaths-over-time-by-region",
+    "title": "Malaria 2000-2017",
+    "section": "\n5.4 Total Reported Malaria Deaths Over Time by Region",
+    "text": "5.4 Total Reported Malaria Deaths Over Time by Region",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#reported-cases-by-country-over-time",
+    "href": "index.html#reported-cases-by-country-over-time",
+    "title": "Malaria 2000-2017",
+    "section": "\n5.5 Reported Cases by Country Over Time",
+    "text": "5.5 Reported Cases by Country Over Time",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#reported-deaths-by-country-over-time",
+    "href": "index.html#reported-deaths-by-country-over-time",
+    "title": "Malaria 2000-2017",
+    "section": "\n5.6 Reported Deaths by Country Over Time",
+    "text": "5.6 Reported Deaths by Country Over Time\n\n\n\n\n\n\nExplanation This map visualizes the number of reported malaria-related deaths by country from the year 2000 to 2017. Each country is colored on a gradient from light to dark red, where darker shades indicate a higher number of deaths. As the animation progresses through time, we can observe how the burden of malaria shifts across regions. Notably, countries in sub-Saharan Africa—especially the Democratic Republic of Congo and Nigeria—consistently show the darkest shades, highlighting their persistent struggle with malaria mortality. This temporal and spatial visualization helps emphasize where intervention efforts have been or still need to be concentrated.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#malaria-cases-and-deaths-by-country-over-time",
+    "href": "index.html#malaria-cases-and-deaths-by-country-over-time",
+    "title": "Malaria 2000-2017",
+    "section": "\n5.7 Malaria Cases and Deaths by Country Over Time",
+    "text": "5.7 Malaria Cases and Deaths by Country Over Time\n\n\n\n\n\n\nExplanation\nThis interactive map illustrates global malaria cases and deaths from the year 2000 to 2017. The background color of each country represents the total number of malaria cases, using a blue gradient—darker blue indicates higher case counts. Overlaying the map, we use red circles to represent the number of reported deaths. The larger the circle, the higher the death toll.\nThis dual-encoded map lets us compare both the prevalence of malaria and its mortality burden at once. For instance, you can see that many central and western African countries not only have dark blue shading—indicating high case numbers—but also large red circles, revealing significant death counts. Meanwhile, other regions may have lighter shades with smaller circles, showing lower disease burden.\nOverall, this visualization helps us track the geographic and temporal patterns of malaria, highlighting where the disease hits hardest and where public health efforts should be prioritized.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#future-work-and-questions",
+    "href": "index.html#future-work-and-questions",
+    "title": "Malaria 2000-2017",
+    "section": "\n5.8 Future Work and Questions",
+    "text": "5.8 Future Work and Questions\n\nExplore causes behind regional differences (e.g., healthcare access, climate, interventions).\nUpdate the dataset with more recent years.\nInvestigate specific country case studies for deeper insights.\nAnalyze the relationship between malaria interventions and case/death trends.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Malaria Cases: 2000-2017</span>"
     ]
@@ -66,7 +126,7 @@
     "section": "",
     "text": "https://www.atlassian.com/blog/teamwork/the-importance-of-teamwork\n\n2.0.1 Summary: The Importance of Teamwork (As Proven by Science)\nResearch shows that teamwork isn’t just good for business, it boosts innovation, happiness, personal growth, and resilience across the board. With the rise of virtual work, collaboration has become even more essential.\nTeamwork leads to:\n\nBetter problem-solving: Groups outperform individuals by combining skills and perspectives.\nMore innovation: Diverse teams unlock creativity and breakthrough ideas.\nHappier employees: Honest, respectful teams boost emotional well-being and productivity.\nPersonal growth: Feedback and cross-training within teams help individuals improve and learn about themselves.\nReduced burnout: Sharing work and emotional support among teammates protects against stress.\nOpportunities for growth: Teams solve complex problems better because no one person can know everything.\nHigher productivity: Peer respect is a stronger motivator than manager approval.\nSmarter risk-taking: Team support encourages bold, innovative ideas, especially in smaller groups.\nFewer mistakes: Supportive, low-stress teams make fewer errors.\nIncreased creativity: Open communication and trust allow new ideas to flourish.\nUltimately, teamwork creates stronger individuals, better companies, and smarter solutions to today’s complex challenges.",
     "crumbs": [
-      "Effective Teamwork",
+      "Effevtive Teamwork",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Feride K</span>"
     ]
   },
@@ -77,7 +137,7 @@
     "section": "",
     "text": "3.1 Effective Teamwork\nTeamwork is a foundational component of successful organizations, yet it requires more than just collaboration—it calls for a strong set of interpersonal and problem-solving skills. According to SkillPath’s article “Effective Teamwork: 8 Simple Characteristics of a Great Team” (2023), high-functioning teams share several defining traits:\nSource: SkillPath Staff. “Effective Teamwork: 8 Simple Characteristics of a Great Team.” SkillPath, Sep. 20, 2023. https://skillpath.com/blog/effective-teamwork",
     "crumbs": [
-      "Effective Teamwork",
+      "Effevtive Teamwork",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Amy Y</span>"
     ]
   },
@@ -88,7 +148,7 @@
     "section": "",
     "text": "Dependence Team members recognize their mutual reliance, focusing on shared and individual goals without undermining others for personal gain.\nTrust Open, trusting environments allow members to express concerns, ask questions, and offer creative solutions without fear.\nOwnership Members take personal responsibility and feel invested in the team’s outcomes, striving for collective rather than individual success.\nIndividual Strengths Effective teams leverage the unique knowledge and skills of each member, contributing meaningfully to shared objectives.\nOpen Communication Continuous, clear communication ensures mutual understanding and reinforces a culture of transparency.\nOngoing Growth Strong teams support professional development, encouraging members to learn, experiment, and grow—even through mistakes.\nGroup Decision-Making Decisions are made collaboratively, valuing each person’s perspective while accepting that the leader may decide when consensus cannot be reached.\nStrong Conflict Resolution Healthy teams resolve disagreements promptly and constructively, maintaining open lines of communication throughout.",
     "crumbs": [
-      "Effective Teamwork",
+      "Effevtive Teamwork",
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Amy Y</span>"
     ]
   },
@@ -99,7 +159,7 @@
     "section": "",
     "text": "https://hr.berkeley.edu/hr-network/central-guide-managing-hr/managing-hr/interaction/team-building/steps\n\n4.0.1 Steps to building an effective team\nThe first rule of team building is an obvious one: to lead a team effectively, you must first establish your leadership with each team member. Remember that the most effective team leaders build their relationships of trust and loyalty, rather than fear or the power of their positions.\n\nConsider each employee’s ideas as valuable. Remember that there is no such thing as a stupid idea.\nBe aware of employees’ unspoken feelings. Set an example to team members by being open with employees and sensitive to their moods and feelings.\nAct as a harmonizing influence. Look for chances to mediate and resolve minor disputes; point continually toward the team’s higher goals.\nBe clear when communicating. Be careful to clarify directives.\nEncourage trust and cooperation among employees on your team. Remember that the relationships team members establish among themselves are every bit as important as those you establish with them. As the team begins to take shape, pay close attention to the ways in which team members work together and take steps to improve communication, cooperation, trust, and respect in those relationships.\nEncourage team members to share information. Emphasize the importance of each team member’s contribution and demonstrate how all of their jobs operate together to move the entire team closer to its goal. Delegate problem-solving tasks to the team. Let the team work on creative solutions together.\nFacilitate communication. Remember that communication is the single most important factor in successful teamwork. Facilitating communication does not mean holding meetings all the time. Instead it means setting an example by remaining open to suggestions and concerns, by asking questions and offering help, and by doing everything you can to avoid confusion in your own communication.\nEstablish team values and goals; evaluate team performance. Be sure to talk with members about the progress they are making toward established goals so that employees get a sense both of their success and of the challenges that lie ahead. Address teamwork in performance standards.\nMake sure that you have a clear idea of what you need to accomplish.\nUse consensus. Set objectives, solve problems, and plan for action. While it takes much longer to establish consensus, this method ultimately provides better decisions and greater productivity because it secures every employee’s commitment to all phases of the work.\nSet ground rules for the team. These are the norms that you and the team establish to ensure efficiency and success. They can be simple directives (Team members are to be punctual for meetings) or general guidelines (Every team member has the right to offer ideas and suggestions), but you should make sure that the team creates these ground rules by consensus and commits to them, both as a group and as individuals.",
     "crumbs": [
-      "Effective Teamwork",
+      "Effevtive Teamwork",
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Aisling L</span>"
     ]
   },
@@ -110,7 +170,7 @@
     "section": "",
     "text": "https://skillpath.com/blog/effective-teamwork\n\nClear Communication: Team members must communicate openly and ensure everyone feels heard.\nTrust: Building trust among members is critical for strong collaboration.\nClear Goals: Teams need well-defined goals so everyone moves in the same direction.\nGood Leadership: A strong leader helps guide the team, solve conflicts, and keep motivation high.\nFlexibility: Successful teams are able to adapt quickly to changes and unexpected challenges.\nContinuous Improvement: Teams should always look for ways to improve their processes and performance.",
     "crumbs": [
-      "Effective Teamwork",
+      "Effevtive Teamwork",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Zora S</span>"
     ]
   },

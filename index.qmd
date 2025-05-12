@@ -1,13 +1,277 @@
 ---
-title: "Report"
+title: "Malaria Cases: 2000-2017"
 execute: 
   echo: true      # change to true to show the code
-code-fold: false  # change to true to fold the code chunks
+code-fold: false  # change to true to fold the code chunk
 ---
 
-Your report will go here.
-
+## Presentation Recording
 ```{r}
-# this is a test code
+cat("Watch the Presentation: https://youtu.be/h7a-UFw0gOk")
 ```
 
+Malaria is a life-threatening disease which continues to claim hundreds of thousands of lives each year, particularly in developing regions with limited access to healthcare infrastructure. Transmitted through the bite of infected female Anopheles mosquitoes, malaria is both a biological and social challenge that intersects with issues of poverty, geography, and political will. This report presents an in-depth data-driven exploration of malaria cases and deaths from 2000 to 2017. It aims to uncover global and regional patterns, analyze changes over time, and offer insights into how the fight against malaria has progressed in different parts of the world.
+
+The central question guiding this study is: **How have global malaria cases and death rates evolved over time, and how do these trends vary across WHO regions and countries between 2000 and 2017?** To investigate this, we used a dataset provided by the World Health Organization that includes annual country-level records of reported malaria cases and deaths, categorized by WHO region. We employed both static and animated visualizations to reveal temporal and spatial patterns in the data. This approach enables us to not only assess long-term global trends but also to highlight persistent regional disparities and emerging areas of concern.
+
+
+## What is the overall trend?
+
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+
+file.exists("data/archive 2/estimated_numbers.csv")
+estimated_numbers <- read.csv("data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("data/archive 2/reported_numbers.csv") 
+
+reported$Year <- as.factor(reported$Year)
+reported %>%
+  group_by(Year) %>%
+  summarize(total_cases = sum(No..of.cases, na.rm = TRUE)) %>%
+  ggplot(aes(x = Year, y = total_cases, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Total Reported Malaria Cases Over Time",
+       x = "Year",
+       y = "Total Cases") +
+  theme_minimal()
+
+
+```
+
+Between 2000 and 2007, the number of reported malaria cases globally remained relatively stable—hovering around 10 to 15 million per year. But starting around 2008, there is a dramatic shift. As shown in this plot, reported cases begin to rise sharply, reaching over 125 million by 2017. This pattern appears to contradict the common belief that malaria is steadily declining worldwide.
+
+However, the increase may reflect expanded diagnostic capacity and improved surveillance, rather than an actual surge in transmission. Many countries introduced more comprehensive reporting systems in the 2010s, which likely resulted in a higher number of cases being documented. In other words, we might be seeing more malaria not because the situation is worsening, but because we’re getting better at counting it.
+
+## Are people dying from it?
+
+```{r}
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  mutate(Year = as.factor(Year)) %>%
+  ggplot(aes(x = Year, y = No..of.deaths)) +
+  geom_boxplot(fill = "#56B4E9", alpha = 0.7) +
+  labs(title = "Distribution of Reported Malaria Deaths by Year (Global)",
+       y = "Number of Deaths", x = "Year") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+To understand whether more cases led to more deaths, we can turn to the second chart: a boxplot showing the distribution of reported malaria deaths by country each year. Despite the sharp increase in reported cases, the distribution of deaths remains relatively wide but doesn’t follow the same sharp upward trajectory. Most countries consistently report relatively low death numbers, while a small number continue to report high fatalities each year—sometimes over 50,000.
+
+This suggests that while malaria remains widespread, it is becoming less deadly overall, possibly due to wider access to treatment and earlier diagnosis. However, the range between countries is still large. Some countries have clearly succeeded in reducing malaria mortality, while others continue to struggle.
+
+## Where are most people dying?
+
+```{r}
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  mutate(Year = as.factor(Year)) %>%
+  ggplot(aes(x = Year, y = No..of.deaths)) +
+  geom_point(color = "#D55E00", alpha = 0.7) +
+  labs(title = "Reported Malaria Deaths Over Time by WHO Region",
+       y = "Number of Deaths", x = "Year") +
+  facet_wrap(~ WHO.Region, scales = "free") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+```{r}
+
+# 📈 Line graph of deaths over time by WHO Region
+reported %>% 
+  drop_na(No..of.deaths) %>% 
+  group_by(WHO.Region, Year) %>%  # <-- group by region and year
+  summarize(total_deaths = sum(No..of.deaths, na.rm = TRUE)) %>% 
+  ggplot(aes(x = Year, y = total_deaths, color = WHO.Region, group = WHO.Region)) +
+  geom_line(size = 1.2) +
+  geom_point(size = 2) +
+  labs(title = "Reported Malaria Deaths Over Time by WHO Region",
+       x = "Year",
+       y = "Total Reported Deaths",
+       color = "WHO Region") +
+  theme_minimal() +
+  theme(plot.title = element_text(size = 16, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+The next two charts break down death patterns by WHO region—first using individual dot plots for each region, then summarizing total regional deaths over time. The pattern here is unmistakable: Africa accounts for the vast majority of global malaria deaths, and this has remained true throughout the entire 2000–2017 period.
+
+In contrast, other regions such as Europe and the Americas report very low death counts, often close to zero. Even South-East Asia, once a major malaria hotspot, shows a steady decline in mortality across the 18 years. These trends reveal a stark inequality in the global burden of malaria. While some regions are approaching elimination, others—especially in sub-Saharan Africa—continue to face high and persistent mortality.
+
+## Let's take a closer look
+
+```{r}
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`
+  )
+```
+
+```{r}
+library(plotly)
+fig <- plot_ly(
+  data = malaria_clean,
+  locations = ~country,
+  locationmode = 'country names',
+  z = ~cases,
+  text = ~paste(country, "<br>Cases:", cases),
+  type = 'choropleth',
+  frame = ~year,
+  colorscale = 'Reds',
+  marker = list(line = list(color = "gray", width = 0.5))
+)
+
+fig <- fig %>%
+  layout(
+    title = "Reported Malaria Cases Over Time",
+   geo = list(showframe = FALSE,
+               showcoastlines = FALSE,
+               showcountries = TRUE,
+               countrycolor = "gray",
+               projection = list(type = "equirectangular"),
+               bgcolor = "white",
+               landcolor = "white")
+  )
+
+fig
+```
+
+```{r}
+# Install and load countrycode package if not already installed
+if (!require(countrycode)) {
+  install.packages("countrycode")
+}
+library(countrycode)
+
+library(tidyverse)
+library(plotly)
+
+# Example: cleaning reported data
+reported_clean_2 <- reported %>%
+  mutate(
+    country = countrycode(Country, origin = "country.name", destination = "iso3c")
+    # year = as.integer(Year),
+    # deaths = as.numeric(No..of.deaths)
+  ) %>%
+  filter(!is.na(country)
+         # !is.na(year),
+         # !is.na(deaths)
+  )
+
+# Create animated choropleth plot
+fig <- plot_ly(
+  data = reported_clean_2,
+  type = "choropleth",
+  locations = ~country,         # ISO3 codes
+  z = ~No..of.deaths,           # Coloring by deaths
+  frame = ~Year,                # Animation frame by year
+  colorscale = "Reds",
+  text = ~paste(Country, "<br>Deaths:", No..of.deaths),
+  colorbar = list(title = "Deaths"),
+  reversescale = FALSE
+)
+
+fig <- fig %>%
+  layout(
+    title = "Reported Deaths by Country Over Time",
+    geo = list(
+      showframe = FALSE,
+      showcoastlines = FALSE,
+      showcountries = TRUE,
+      countrycolor = "gray",
+      projection =list(type = "equirectangular"),
+      bgcolor = "white",
+      landcolor = "white"
+    )
+  )
+
+fig
+
+```
+
+```{r}
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`, `No..of.deaths`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`,
+    deaths = `No..of.deaths`
+  )
+
+
+fig <- plot_ly() %>%
+  add_trace(
+    data = malaria_clean,
+    type = "choropleth",
+    locations = ~country,
+    locationmode = "country names",
+    z = ~cases,
+    frame = ~year,
+    colorscale = "Blues",
+    reversescale = TRUE,
+    text = ~paste("Country:", country,
+                  "<br>Total Cases:", format(cases, big.mark = ","),
+                  "<br>Deaths:", format(deaths, big.mark = ",")),
+    hoverinfo = "text",
+    colorbar = list(title = "Total Cases"),
+    marker = list(line = list(color = "white", width = 0.5))
+  ) %>%
+  
+
+  add_trace(
+    data = malaria_clean,
+    type = "scattergeo",
+    locations = ~country,
+    locationmode = "country names",
+    frame = ~year,
+    marker = list(
+      size = ~sqrt(deaths) * 0.25,
+      color = 'red',
+      opacity = 0.6,
+      line = list(width = 0)
+    ),
+    hoverinfo = "none",
+    showlegend = FALSE
+  ) %>%
+  
+  layout(
+    title = "Global Malaria Cases and Deaths from 2000 to 2017",
+    geo = list(
+      showframe = FALSE,
+      showcountries = TRUE,
+      showcoastlines = FALSE,
+      countrycolor = "grey",
+      landcolor = "lightgrey",
+      projection = list(type = "equirectangular"),
+      bgcolor = "white"
+    )
+  )
+
+fig
+
+```
+
+
+So far, we’ve looked at overall trends and regional disparities. But what does the malaria burden look like at the country level? Using interactive Plotly maps, we can track changes over time and visualize not just where malaria is spreading, but where it’s killing.
+
+The first map focuses on reported malaria cases from 2000 to 2017. Here, countries like India, Brazil, and Indonesia appear prominently, with India consistently reporting over 2 million cases per year. Interestingly, many African countries show little or no shading in early years—not because malaria wasn’t present, but because surveillance systems were still developing. Over time, these countries become more visible, reinforcing the idea that part of the global increase in reported cases may be due to improved detection rather than worsening transmission.
+
+The second map shows malaria-related deaths, and the picture shifts dramatically. South Asian and South American countries that previously looked severe now appear much lighter. Meanwhile, central and western African countries dominate the death map, with the darkest shades consistently appearing in places like Nigeria and the Democratic Republic of Congo. This highlights a critical distinction: many regions have high numbers of infections, but only some face the compounded burden of both high infection and high mortality, often due to weaker healthcare systems.
+The final map puts everything together. Background shading represents case counts, while red circles denote the number of deaths. Countries like India are dark blue but have small red circles—indicating effective treatment and relatively low fatality rates. In contrast, the large red circles clustered across central Africa tell a different story: many of these countries are not only struggling with high malaria transmission, but also lack the infrastructure to prevent deaths.
+
+These maps don’t just tell us where malaria is. They show us where it is deadliest. And that’s where the world’s attention and resources need to stay focused.
+
+## Where do we go from here?
+The data makes one thing clear: malaria is not a disease of the past—it is an ongoing global emergency, and one that is still evolving. While surveillance and treatment have improved in many countries, millions of people remain at risk, and tens of thousands still die every year from a preventable and treatable illness.
+
+As we move forward, the goal is not just to reduce numbers on a chart, but to close the global gap in prevention and care. That means targeted investment in the regions that need it most, continued innovation in diagnostics and treatment, and stronger international cooperation. Data like this helps us understand where the problems are. What happens next depends on whether we act on it.

@@ -1,32 +1,16 @@
-# options for Quarto book
-# https://quarto.org/docs/reference/projects/books.html
-# 
-# Options for html
-# https://quarto.org/docs/reference/projects/websites.html#section
-
 project:
   type: book
   output-dir: docs
 
-
-
 book:
-  title: "project title"
-  author: ["student 1 first and last name", "student 2 first and last name", "student 3 first and last name"]
-  date: today  # use today to update date published based on last time project was edited
+  title: "Malaria 2000-2017"
+  author: ["Feride Karatas", "Amy Yang", "Zora Shi", "Aisling Li"]
+  date: today
   date-format: full
-  # favicon: images/logo.png
   reader-mode: true
-  # site-url: https://hashcx.github.io/mac-comp112website-f24/
   page-navigation: true
   back-to-top-navigation: true
   cookie-consent: true
-  # bread-crumbs: true  # causes problems with older Quarto version
-  # downloads: [pdf]
-  # repo-url: https://github.com/hashcx/mac-comp112website-f24
-  # repo-actions: [edit, issue]
-  # repo-link-target: "_blank" #makes issue and edit links open in a new window/tab 
-
 
   sidebar:
     title: "sidebar title"
@@ -38,15 +22,27 @@ book:
   chapters:
     - index.qmd
 
+    - part: "Effective Teamwork"
+      chapters: 
+        - src/et/feride-k.qmd
+        - src/et/amy-y.qmd
+        - src/et/aisling-l.qmd
+        - src/et/zora-s.qmd
+
+    - part: "EDA"
+      chapters: 
+        - src/eda/feride-k.qmd
+        - src/eda/amy-y.qmd
+        - src/eda/aisling-l.qmd
+        - src/eda/zora-s.qmd
+
   appendices:
-  - src/appx/proposal.qmd
-  - src/appx/case-study.qmd
-
-
+    - src/appx/proposal.qmd
+    - src/appx/case-study.qmd
 
 format:
   html:
-    theme: # bootswatch themes--other options https://bootswatch.com/
+    theme:
       light: flatly
       dark: darkly
     search: true
@@ -64,19 +60,11 @@ format:
     code-tools: true
     page-layout: full
 
-  # pdf:
-  #   documentclass: scrreprt
-  #   keep-tex: false
-
-
-
 execute:
   cache: true
-#   freeze: auto # remove when using GitHub action to execute code
-
-
 
 editor: 
   mode: source
   markdown:
-    wrap: sentence # Forces each sentence to be on its own line in source markdown, however, it doesn't affect how it is rendered
+    wrap: sentence
+

@@ -1,0 +1,57 @@
+---
+title: "Aisling L"
+format: html
+---
+```{r}
+
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+
+estimated_numbers <- read.csv("../../data/archive 2/estimated_numbers.csv") 
+incidence <-read.csv("../../data/archive 2/incidence_per_1000_pop_at_risk.csv")
+reported <-read.csv("../../data/archive 2/reported_numbers.csv") #use this one
+
+```
+
+```{r}
+malaria_clean <- reported %>%
+  select(Country, Year, `No..of.cases`) %>%
+  rename(
+    country = Country,
+    year = Year,
+    cases = `No..of.cases`
+  )
+
+```
+
+```{r}
+library(plotly)
+fig <- plot_ly(
+  data = malaria_clean,
+  locations = ~country,
+  locationmode = 'country names',
+  z = ~cases,
+  text = ~paste(country, "<br>Cases:", cases),
+  type = 'choropleth',
+  frame = ~year,
+  colorscale = 'Reds',
+  marker = list(line = list(color = "gray", width = 0.5))
+)
+
+fig <- fig %>%
+  layout(
+    title = "Reported Malaria Cases Over Time",
+   geo = list(showframe = FALSE,
+               showcoastlines = FALSE,
+               showcountries = TRUE,
+               countrycolor = "gray",
+               projection = list(type = "equirectangular"),
+               bgcolor = "white",
+               landcolor = "white")
+  )
+
+fig
+
+```
+

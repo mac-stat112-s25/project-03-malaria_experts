@@ -3,3 +3,34 @@ title: "Amy Y"
 format: html
 ---
 
+## Effective Teamwork
+
+Teamwork is a foundational component of successful organizations, yet it requires more than just collaboration—it calls for a strong set of interpersonal and problem-solving skills. According to SkillPath’s article *“Effective Teamwork: 8 Simple Characteristics of a Great Team”* (2023), high-functioning teams share several defining traits:
+
+1. Dependence 
+  Team members recognize their mutual reliance, focusing on shared and individual goals without undermining others for personal gain.
+
+2. Trust 
+  Open, trusting environments allow members to express concerns, ask questions, and offer creative solutions without fear.
+
+3. Ownership 
+  Members take personal responsibility and feel invested in the team’s outcomes, striving for collective rather than individual success.
+
+4. Individual Strengths 
+  Effective teams leverage the unique knowledge and skills of each member, contributing meaningfully to shared objectives.
+
+5. Open Communication 
+  Continuous, clear communication ensures mutual understanding and reinforces a culture of transparency.
+
+6. Ongoing Growth 
+  Strong teams support professional development, encouraging members to learn, experiment, and grow—even through mistakes.
+
+7. Group Decision-Making 
+  Decisions are made collaboratively, valuing each person’s perspective while accepting that the leader may decide when consensus cannot be reached.
+
+8. Strong Conflict Resolution
+  Healthy teams resolve disagreements promptly and constructively, maintaining open lines of communication throughout.
+
+
+*Source: SkillPath Staff. “Effective Teamwork: 8 Simple Characteristics of a Great Team.”* 
+SkillPath, Sep. 20, 2023. [https://skillpath.com/blog/effective-teamwork](https://skillpath.com/blog/effective-teamwork)
